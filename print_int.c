@@ -1,42 +1,52 @@
 #include "main.h"
 
 /**
- * print_int - prints an integer
- * @arguments: input string
- * @buf: buffer pointer
- * @ibuf: index for buffer pointer
- * Return: number of chars printed.
+ * print_int_helper - helper function for print_int
+ * @n: the number to print
+ *
+ * Return: the number of characters printed
  */
-int print_int(va_list arguments, char *buf, unsigned int ibuf)
+int print_int_helper(int n)
 {
-	int int_input;
-	unsigned int int_in, int_temp, i, div, isneg;
+	unsigned int i;
+	int count = 0;
 
-	int_input = va_arg(arguments, int);
-	isneg = 0;
-	if (int_input < 0)
+	i = n;
+	if (n < 0)
 	{
-		int_in = int_input * -1;
-		ibuf = handl_buf(buf, '-', ibuf);
-		isneg = 1;
-	}
-	else
-	{
-		int_in = int_input;
+		_putchar('-');
+		count++;
+		i = -i;
 	}
 
-	int_temp = int_in;
-	div = 1;
-
-	while (int_temp > 9)
+	if (i < 10)
 	{
-		div *= 10;
-		int_temp /= 10;
+		count += _putchar(i + '0');
+		return (count);
 	}
 
-	for (i = 0; div > 0; div /= 10, i++)
+	if (i > 9)
 	{
-		ibuf = handl_buf(buf, ((int_in / div) % 10) + '0', ibuf);
+		count += print_int_helper(i / 10) + 1;
+		_putchar((i % 10) + '0');
+		return (count);
 	}
-	return (i + isneg);
+
+	return (0);
+}
+
+/**
+ * print_int - Prints an integer to stdout
+ * @ap: The argument pointer
+ *
+ * Return: The number of characters printed
+ */
+int print_int(va_list ap)
+{
+	int n = va_arg(ap, int);
+	int count = 0;
+
+
+	count = print_int_helper(n);
+	return (count);
 }

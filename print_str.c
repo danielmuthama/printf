@@ -1,26 +1,49 @@
 #include "main.h"
 
 /**
- * print_str - writes the string to stdout
- * @arguments: input string
- * @buf: buffer pointer
- * @ibuf: index for buffer pointer
- * Return: On success 1.
+ * print_char - Prints a character to stdout
+ * @ap: The argument pointer
+ *
+ * Return: The number of characters printed
  */
-int print_str(va_list arguments, char *buf, unsigned int ibuf)
+int print_char(va_list ap)
 {
-	char *str;
-	unsigned int i;
-	char nill[] = "(null)";
+	char c = va_arg(ap, int);
 
-	str = va_arg(arguments, char *);
-	if (str == NULL)
+	_putchar(c);
+	return (1);
+}
+
+/**
+ * print_string - Prints a string to stdout
+ * @ap: The argument pointer
+ *
+ * Return: The number of characters printed
+ */
+int print_string(va_list ap)
+{
+	char *s = va_arg(ap, char *);
+	int i, ret = 0;
+
+	if (s == NULL)
+		s = "(null)";
+
+	for (i = 0; s[i] != '\0'; i++)
 	{
-		for (i = 0; nill[i]; i++)
-			ibuf = handl_buf(buf, nill[i], ibuf);
-		return (6);
+		_putchar(s[i]);
+		ret++;
 	}
-	for (i = 0; str[i]; i++)
-		ibuf = handl_buf(buf, str[i], ibuf);
-	return (i);
+	return (ret);
+}
+
+/**
+ * print_percent - Prints a percent to stdout
+ * @ap: The argument pointer
+ *
+ * Return: The number of characters printed
+ */
+int print_percent(va_list ap __attribute__((unused)))
+{
+	_putchar('%');
+	return (1);
 }
